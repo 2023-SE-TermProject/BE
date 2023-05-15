@@ -1,5 +1,6 @@
 package com.example.setermproject.domain.reservation.entity;
 
+import com.example.setermproject.domain.reservation.dto.response.GetReservationInfoRes;
 import com.example.setermproject.domain.reservation.entity.vo.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -21,8 +22,9 @@ public class Reservation {
     @Column
     private Long studentIdx;
 
-    @Column
-    private Long meetingRoomIdx;
+    @ManyToOne
+    @JoinColumn
+    private MeetingRoom meetingRoom;
 
     @Column
     private LocalDateTime startTime;
@@ -35,11 +37,21 @@ public class Reservation {
     private ReservationStatus status;
 
     @Builder
-    private Reservation(Long studentIdx, Long meetingRoomIdx, LocalDateTime startTime, LocalDateTime endTime) {
+    private Reservation(Long studentIdx, MeetingRoom meetingRoom, LocalDateTime startTime, LocalDateTime endTime) {
         this.studentIdx = studentIdx;
-        this.meetingRoomIdx = meetingRoomIdx;
+        this.meetingRoom = meetingRoom;
         this.startTime = startTime;
         this.endTime = endTime;
         this.status = ReservationStatus.WAIT;
     }
+
+    public GetReservationInfoRes toReservationInfo() {
+        return GetReservationInfoRes.builder()
+                .idx(this.idx)
+                .startTime(this.startTime)
+                .endTime(this.endTime)
+                .roomNumber(this.meetingRoom.getRoomNumber())
+                .build();
+    }
+
 }
