@@ -11,6 +11,7 @@ import com.example.setermproject.domain.reservation.repository.MeetingRoomReposi
 import com.example.setermproject.domain.reservation.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -47,6 +49,7 @@ public class ReservationService {
         return true;
     }
 
+    @Transactional(readOnly = true)
     public List<GetReservationInfoRes> findMemberReservations(Long memberIdx) {
         List<Reservation> reservations = reservationRepository.findByStudentIdxAndEndTimeAfterOrderByStartTime(memberIdx, LocalDateTime.now());
 
