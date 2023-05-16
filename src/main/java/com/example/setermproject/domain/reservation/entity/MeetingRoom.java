@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table
 @Entity
 @Getter
@@ -15,14 +17,10 @@ public class MeetingRoom {
     private Long id;
 
     @Column
-    private String name;
-
-    @Column
     private String roomNumber;
 
     @Builder
-    public MeetingRoom(String name, String roomNumber) {
-        this.name = name;
+    public MeetingRoom(String roomNumber) {
         this.roomNumber = roomNumber;
     }
 

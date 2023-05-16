@@ -1,5 +1,6 @@
 package com.example.setermproject.domain.seat.entity;
 
+import com.example.setermproject.domain.member.entity.Member;
 import com.example.setermproject.domain.seat.entity.vo.SeatStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,6 +20,9 @@ public class Seat {
 
     @Column
     private Integer seatNumber;
+
+    @Column
+    private Long memberId;
 
     @Column
     private SeatStatus status;

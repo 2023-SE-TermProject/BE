@@ -17,18 +17,30 @@ public class Member {
     private Long id;
 
     @Column
-    private String googleId;
+    private String name;
+
+    @Column
+    private String email;
 
     @Column
     @Setter
-    private String student_id;
+    private String studentId;
 
     @Column
     private MemberRole role;
 
     @Builder
-    public Member(String googleId) {
-        this.googleId = googleId;
+    public Member(String name, String email, String studentId) {
+        this.name = name;
+        this.email = email;
+        this.studentId = studentId;
+        this.role = MemberRole.COMMON;
+    }
+
+    @Builder
+    public Member(String name, String email) {
+        this.name = name;
+        this.email = email;
         this.role = MemberRole.COMMON;
     }
 }
