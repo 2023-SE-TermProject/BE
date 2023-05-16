@@ -27,12 +27,13 @@ public class ReservationService {
 
     public Boolean reserveMeetingRoom(PostReservationReq postReservationReq) {
 
-        if (reservationRepository.existsByMeetingRoomIdxAndEndTimeGreaterThanAndEndTimeLessThan(postReservationReq.getMeetingRoomIdx(), postReservationReq.getStart(), postReservationReq.getEnd()) ||
-                reservationRepository.existsByMeetingRoomIdxAndStartTimeGreaterThanAndStartTimeLessThan(postReservationReq.getMeetingRoomIdx(), postReservationReq.getStart(), postReservationReq.getEnd())) {
+        MeetingRoom meetingRoom = meetingRoomRepository.findById(postReservationReq.getMeetingRoomIdx()).orElseThrow(() -> new MeetingRoomNotExistException());
+
+        if (reservationRepository.existsByMeetingRoomAndEndTimeGreaterThanAndEndTimeLessThanEqual(meetingRoom, postReservationReq.getStart(), postReservationReq.getEnd()) ||
+                reservationRepository.existsByMeetingRoomAndStartTimeGreaterThanEqualAndStartTimeLessThan(meetingRoom, postReservationReq.getStart(), postReservationReq.getEnd())) {
             throw new ReservedMeetingRoomException();
         }
 
-        MeetingRoom meetingRoom = meetingRoomRepository.findById(postReservationReq.getMeetingRoomIdx()).orElseThrow(() -> new MeetingRoomNotExistException());
         reservationRepository.save(Reservation.builder()
                         .meetingRoom(meetingRoom)
                         .studentIdx(postReservationReq.getMemberIdx())
