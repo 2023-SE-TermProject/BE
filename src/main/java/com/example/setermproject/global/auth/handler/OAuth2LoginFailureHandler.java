@@ -15,6 +15,6 @@ public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.getWriter().write("Failed to login.");
-        response.sendRedirect("http://localhost:3000/");
+        response.sendRedirect("http://localhost:3000/login");
     }
 }

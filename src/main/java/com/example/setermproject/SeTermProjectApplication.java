@@ -2,6 +2,8 @@ package com.example.setermproject;
 
 import com.example.setermproject.domain.reservation.entity.MeetingRoom;
 import com.example.setermproject.domain.reservation.repository.MeetingRoomRepository;
+import com.example.setermproject.domain.seat.entity.Seat;
+import com.example.setermproject.domain.seat.repository.SeatRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +19,7 @@ import java.util.List;
 public class SeTermProjectApplication {
 
     @Autowired private MeetingRoomRepository meetingRoomRepository;
+    @Autowired private SeatRepository seatRepository;
 
     @PostConstruct
     public void init() {
@@ -28,7 +31,16 @@ public class SeTermProjectApplication {
         meetingRooms.add(MeetingRoom.builder().roomNumber("405B").build());
         meetingRooms.add(MeetingRoom.builder().roomNumber("406C").build());
 
+        List<Seat> seats = new ArrayList<>();
+        for(int floor = 2; floor <= 7; floor++) {
+            if(floor == 6) continue;
+            for(int i = 0; i < 15; i++) {
+                seats.add(Seat.builder().floor(floor).seatNumber(i).build());
+            }
+        }
+
         meetingRoomRepository.saveAll(meetingRooms);
+        seatRepository.saveAll(seats);
     }
 
     public static void main(String[] args) {

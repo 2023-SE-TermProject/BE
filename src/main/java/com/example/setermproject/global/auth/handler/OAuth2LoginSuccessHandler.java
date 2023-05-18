@@ -26,33 +26,25 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             ObjectMapper mapper = new ObjectMapper();
-
+            String role;
             String target;
 
             // Member의 Role이 GUEST일 경우 처음 로그인 한 회원
             if (oAuth2User.getRole() == MemberRole.ROLE_GUEST) {
-                // 최초로그인 시그널
-                target = UriComponentsBuilder
-                        .fromHttpUrl(targetUrl)
-                        .queryParam("role", "guest")
-                        .queryParam("token", "token")
-                        .build().toUriString();
+                role = "guest";
             }
             else if(oAuth2User.getRole() == MemberRole.ROLE_ADMIN) {
-                // 로그인 승인
-                target = UriComponentsBuilder
-                        .fromHttpUrl(targetUrl)
-                        .queryParam("role", "admin")
-                        .queryParam("token", "token")
-                        .build().toUriString();
+                role = "admin";
             }
             else {
-                target = UriComponentsBuilder
-                        .fromHttpUrl(targetUrl)
-                        .queryParam("role", "user")
-                        .queryParam("token", "token")
-                        .build().toUriString();
+                role = "user";
             }
+            target = UriComponentsBuilder
+                    .fromHttpUrl(targetUrl)
+                    .queryParam("role", role)
+                    .queryParam("id", oAuth2User.getId())
+                    .queryParam("token", "token")
+                    .build().toUriString();
 
             getRedirectStrategy().sendRedirect(request, response, target);
 
