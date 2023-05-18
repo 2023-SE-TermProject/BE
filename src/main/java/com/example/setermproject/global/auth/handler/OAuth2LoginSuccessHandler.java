@@ -34,15 +34,22 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                 // 최초로그인 시그널
                 target = UriComponentsBuilder
                         .fromHttpUrl(targetUrl)
-                        .queryParam("role", "true")
+                        .queryParam("role", "guest")
+                        .queryParam("token", "token")
+                        .build().toUriString();
+            }
+            else if(oAuth2User.getRole() == MemberRole.ROLE_ADMIN) {
+                // 로그인 승인
+                target = UriComponentsBuilder
+                        .fromHttpUrl(targetUrl)
+                        .queryParam("role", "admin")
                         .queryParam("token", "token")
                         .build().toUriString();
             }
             else {
-                // 로그인 승인
                 target = UriComponentsBuilder
                         .fromHttpUrl(targetUrl)
-                        .queryParam("on-first", "false")
+                        .queryParam("role", "user")
                         .queryParam("token", "token")
                         .build().toUriString();
             }
