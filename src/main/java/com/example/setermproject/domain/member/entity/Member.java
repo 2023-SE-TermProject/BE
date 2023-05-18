@@ -26,21 +26,22 @@ public class Member {
     @Setter
     private String studentId;
 
+    @Setter
     @Column
     private MemberRole role;
 
     @Builder
-    public Member(String name, String email, String studentId) {
+    public Member(String name, String email, String studentId, MemberRole memberRole) {
         this.name = name;
         this.email = email;
         this.studentId = studentId;
-        this.role = MemberRole.COMMON;
+        this.role = memberRole;
     }
 
     @Builder
-    public Member(String name, String email) {
+    public Member(String name, String email, MemberRole memberRole) {
         this.name = name;
         this.email = email;
-        this.role = MemberRole.COMMON;
+        this.role = memberRole;
     }
 }
