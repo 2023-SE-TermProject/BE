@@ -36,11 +36,15 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .requestMatchers("/**").permitAll()
+                /*
                 .requestMatchers("/log-in/**").permitAll()
                 .requestMatchers("/sign-up").hasRole("GUEST")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/hello").permitAll()
                 .anyRequest().hasRole("USER")
+
+                 */
         );
 
         http.oauth2Login()
