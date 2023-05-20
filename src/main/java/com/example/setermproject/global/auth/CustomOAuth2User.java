@@ -1,6 +1,6 @@
 package com.example.setermproject.global.auth;
 
-import com.example.setermproject.domain.member.entity.vo.MemberRole;
+import com.example.setermproject.domain.member.entity.vo.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -13,7 +13,7 @@ public class CustomOAuth2User extends DefaultOAuth2User {
 
     private Long id;
     private String email;
-    private MemberRole role;
+    private Role role;
 
     /**
      * Constructs a {@code DefaultOAuth2User} using the provided parameters.
@@ -25,7 +25,7 @@ public class CustomOAuth2User extends DefaultOAuth2User {
      */
     public CustomOAuth2User(Collection<? extends GrantedAuthority> authorities,
                             Map<String, Object> attributes, String nameAttributeKey,
-                            Long id, String email, MemberRole role) {
+                            Long id, String email, Role role) {
         super(authorities, attributes, nameAttributeKey);
         this.id = id;
         this.email = email;

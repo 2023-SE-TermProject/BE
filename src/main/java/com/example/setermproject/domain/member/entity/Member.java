@@ -1,6 +1,6 @@
 package com.example.setermproject.domain.member.entity;
 
-import com.example.setermproject.domain.member.entity.vo.MemberRole;
+import com.example.setermproject.domain.member.entity.vo.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,10 +28,14 @@ public class Member {
 
     @Setter
     @Column
-    private MemberRole role;
+    private Role role;
+
+    @Setter
+    @Column
+    private String refreshToken;
 
     @Builder
-    public Member(String name, String email, String studentId, MemberRole memberRole) {
+    public Member(String name, String email, String studentId, Role memberRole) {
         this.name = name;
         this.email = email;
         this.studentId = studentId;
@@ -39,9 +43,13 @@ public class Member {
     }
 
     @Builder
-    public Member(String name, String email, MemberRole memberRole) {
+    public Member(String name, String email, Role memberRole) {
         this.name = name;
         this.email = email;
         this.role = memberRole;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        setRefreshToken(refreshToken);
     }
 }

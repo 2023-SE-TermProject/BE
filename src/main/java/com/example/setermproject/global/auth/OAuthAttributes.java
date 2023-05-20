@@ -1,7 +1,7 @@
 package com.example.setermproject.global.auth;
 
 import com.example.setermproject.domain.member.entity.Member;
-import com.example.setermproject.domain.member.entity.vo.MemberRole;
+import com.example.setermproject.domain.member.entity.vo.Role;
 import com.example.setermproject.global.auth.userinfo.GoogleOAuth2UserInfo;
 import com.example.setermproject.global.auth.userinfo.OAuth2UserInfo;
 import lombok.Builder;
@@ -49,7 +49,7 @@ public class OAuthAttributes {
         return Member.builder()
                 .name(oauth2UserInfo.getName())
                 .email(oauth2UserInfo.getEmail())
-                .memberRole(MemberRole.ROLE_GUEST)
+                .memberRole(Role.GUEST)
                 .build();
     }
 }

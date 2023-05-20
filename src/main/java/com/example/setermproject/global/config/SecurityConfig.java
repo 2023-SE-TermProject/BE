@@ -1,8 +1,12 @@
 package com.example.setermproject.global.config;
 
+import com.example.setermproject.domain.member.entity.vo.Role;
+import com.example.setermproject.domain.member.repository.MemberRepository;
 import com.example.setermproject.global.auth.handler.OAuth2LoginFailureHandler;
 import com.example.setermproject.global.auth.handler.OAuth2LoginSuccessHandler;
+import com.example.setermproject.global.auth.jwt.JwtAuthenticationProcessingFilter;
 import com.example.setermproject.global.auth.service.CustomOAuth2UserService;
+import com.example.setermproject.global.util.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +20,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -24,34 +34,57 @@ public class SecurityConfig {
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2LoginSuccessHandler successHandler;
     private final OAuth2LoginFailureHandler failureHandler;
+    private final JwtService jwtService;
+    private final MemberRepository memberRepository;
 
     @Bean
     protected SecurityFilterChain config(HttpSecurity http) throws Exception {
         http.formLogin().disable();
         http.httpBasic().disable();
         http.csrf().disable();
+        http.cors();
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers("/**").permitAll()
-                /*
-                .requestMatchers("/log-in/**").permitAll()
-                .requestMatchers("/sign-up").hasRole("GUEST")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/hello").permitAll()
-                .anyRequest().hasRole("USER")
-
-                 */
+                .requestMatchers("/oauth2/**").permitAll()
+                .requestMatchers("/members/sign-up").hasRole(Role.GUEST.name())
+                .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
+                .anyRequest().hasRole(Role.USER.name())
         );
 
         http.oauth2Login()
+                .userInfoEndpoint().userService(oAuth2UserService)
+                .and()// CustomUserService 설정
                 .successHandler(successHandler) // 동의하고 계속하기를 눌렀을때 Handler 설정
-                .failureHandler(failureHandler) // 로그인 실패시 Handler 설정
-                .userInfoEndpoint().userService(oAuth2UserService); // CustomUserService 설정
+                .failureHandler(failureHandler); // 로그인 실패시 Handler 설정
+
+
+        http.addFilterBefore(jwtAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
+    @Bean
+    public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
+        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(jwtService, memberRepository);
+        return jwtAuthenticationFilter;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 }
