@@ -1,8 +1,10 @@
 package com.example.setermproject.global.auth.handler;
 
 import com.example.setermproject.domain.member.dto.MemberDto;
-import com.example.setermproject.domain.member.entity.vo.MemberRole;
+import com.example.setermproject.domain.member.entity.vo.Role;
+import com.example.setermproject.domain.member.repository.MemberRepository;
 import com.example.setermproject.global.auth.CustomOAuth2User;
+import com.example.setermproject.global.util.jwt.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,21 +21,27 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    private final JwtService jwtService;
+    private final MemberRepository memberRepository;
     private static final String targetUrl = "http://localhost:3000/oauth/redirect";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        System.out.println("로그인 성공 - memberId : " + authentication.getName());
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+
             ObjectMapper mapper = new ObjectMapper();
             String role;
             String target;
 
+            String accessToken = jwtService.createAccessToken(oAuth2User.getId(), oAuth2User.getRole());
+
             // Member의 Role이 GUEST일 경우 처음 로그인 한 회원
-            if (oAuth2User.getRole() == MemberRole.ROLE_GUEST) {
+            if (oAuth2User.getRole() == Role.GUEST) {
                 role = "guest";
             }
-            else if(oAuth2User.getRole() == MemberRole.ROLE_ADMIN) {
+            else if(oAuth2User.getRole() == Role.ADMIN) {
                 role = "admin";
             }
             else {
@@ -43,7 +51,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                     .fromHttpUrl(targetUrl)
                     .queryParam("role", role)
                     .queryParam("id", oAuth2User.getId())
-                    .queryParam("token", "token")
+                    .queryParam("token", accessToken)
                     .build().toUriString();
 
             getRedirectStrategy().sendRedirect(request, response, target);
