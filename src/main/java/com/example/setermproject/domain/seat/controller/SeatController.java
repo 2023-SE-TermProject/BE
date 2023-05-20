@@ -17,13 +17,5 @@ public class SeatController {
 
     private final SeatService seatService;
 
-    // 회원이 이용 중인 좌석 조회
-    @GetMapping("/member/{member-id}")
-    public ResponseEntity<MemberSeatRes> findMemberUsingSeat(@PathVariable("member-id") Long memberId) {
-        try {
-            return new ResponseEntity<>(seatService.findMemberSeat(memberId), HttpStatus.OK);
-        }catch (Exception e) {
-            return new ResponseEntity("Unknown Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+
 }

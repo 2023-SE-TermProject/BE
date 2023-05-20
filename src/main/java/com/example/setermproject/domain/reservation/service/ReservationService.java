@@ -52,7 +52,7 @@ public class ReservationService {
 
     @Transactional(readOnly = true)
     public List<GetReservationInfoRes> findMemberReservations(Long memberIdx) {
-        List<Reservation> reservations = reservationRepository.findByStudentIdxAndEndTimeAfterOrderByStartTime(memberIdx, LocalDateTime.now());
+        List<Reservation> reservations = reservationRepository.findByMemberIdxAndEndTimeAfterOrderByStartTime(memberIdx, LocalDateTime.now());
 
         return reservations.stream().map(reservation -> reservation.toReservationInfo()).collect(Collectors.toList());
     }

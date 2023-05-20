@@ -13,5 +13,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     public Boolean existsByMeetingRoomAndEndTimeGreaterThanAndEndTimeLessThanEqual(MeetingRoom meetingRoom, LocalDateTime start, LocalDateTime end);
 
-    public List<Reservation> findByStudentIdxAndEndTimeAfterOrderByStartTime(Long memberIdx, LocalDateTime time);
+    public List<Reservation> findByMemberIdxAndEndTimeAfterOrderByStartTime(Long memberIdx, LocalDateTime time);
 }

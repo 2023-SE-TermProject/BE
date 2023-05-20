@@ -20,7 +20,7 @@ public class Reservation {
     private Long idx;
 
     @Column
-    private Long studentIdx;
+    private Long memberIdx;
 
     @ManyToOne
     @JoinColumn
@@ -37,8 +37,8 @@ public class Reservation {
     private ReservationStatus status;
 
     @Builder
-    private Reservation(Long studentIdx, MeetingRoom meetingRoom, LocalDateTime startTime, LocalDateTime endTime) {
-        this.studentIdx = studentIdx;
+    private Reservation(Long memberIdx, MeetingRoom meetingRoom, LocalDateTime startTime, LocalDateTime endTime) {
+        this.memberIdx = memberIdx;
         this.meetingRoom = meetingRoom;
         this.startTime = startTime;
         this.endTime = endTime;
