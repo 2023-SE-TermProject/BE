@@ -11,10 +11,13 @@ import java.io.IOException;
 
 @Component
 public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
+
+    private final static String FAILED_REDIRECT_URL = "http://localhost:3000/login";
+
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.out.println("로그인 실패");
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.sendRedirect(FAILED_REDIRECT_URL);
         response.getWriter().write("Failed to login.");
     }
 }

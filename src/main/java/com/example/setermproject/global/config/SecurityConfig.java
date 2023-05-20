@@ -4,25 +4,18 @@ import com.example.setermproject.domain.member.entity.vo.Role;
 import com.example.setermproject.domain.member.repository.MemberRepository;
 import com.example.setermproject.global.auth.handler.OAuth2LoginFailureHandler;
 import com.example.setermproject.global.auth.handler.OAuth2LoginSuccessHandler;
-import com.example.setermproject.global.auth.jwt.JwtAuthenticationProcessingFilter;
+import com.example.setermproject.global.auth.filter.JwtAuthenticationProcessingFilter;
 import com.example.setermproject.global.auth.service.CustomOAuth2UserService;
 import com.example.setermproject.global.util.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -50,7 +43,7 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers("/oauth2/**").permitAll()
-                .requestMatchers("/members/sign-up").hasRole(Role.GUEST.name())
+                .requestMatchers("/members/*/sign-up").hasRole(Role.GUEST.name())
                 .requestMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().hasRole(Role.USER.name())
         );

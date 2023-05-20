@@ -36,7 +36,7 @@ public class ReservationService {
 
         reservationRepository.save(Reservation.builder()
                         .meetingRoom(meetingRoom)
-                        .studentIdx(postReservationReq.getMemberIdx())
+                        .memberIdx(postReservationReq.getMemberIdx())
                         .startTime(postReservationReq.getStart())
                         .endTime(postReservationReq.getEnd())
                 .build());

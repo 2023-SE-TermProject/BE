@@ -23,7 +23,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
     private final JwtService jwtService;
     private final MemberRepository memberRepository;
-    private static final String targetUrl = "http://localhost:3000/oauth/redirect";
+    private static final String targetUrl = "http://localhost:3000/loginauth";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {

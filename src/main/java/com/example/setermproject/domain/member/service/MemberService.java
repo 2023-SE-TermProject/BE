@@ -1,5 +1,6 @@
 package com.example.setermproject.domain.member.service;
 
+import com.example.setermproject.domain.member.dto.response.MemberInfo;
 import com.example.setermproject.domain.member.entity.Member;
 import com.example.setermproject.domain.member.entity.vo.Role;
 import com.example.setermproject.domain.member.repository.MemberRepository;
@@ -44,5 +45,15 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(() -> new NotFoundException());
 
         return reservationService.findMemberReservations(id);
+    }
+
+    public MemberInfo findMember(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new NotFoundException());
+
+        return MemberInfo.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .studentId(member.getStudentId())
+                .build();
     }
 }

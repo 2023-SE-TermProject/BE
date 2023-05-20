@@ -1,11 +1,11 @@
 package com.example.setermproject.domain.member.controller;
 
 import com.example.setermproject.domain.member.dto.request.MemberSiginupReq;
+import com.example.setermproject.domain.member.dto.response.MemberInfo;
 import com.example.setermproject.domain.member.service.MemberService;
 import com.example.setermproject.domain.reservation.dto.response.GetReservationInfoRes;
 import com.example.setermproject.domain.reservation.exception.NotFoundException;
 import com.example.setermproject.domain.seat.dto.MemberSeatRes;
-import com.example.setermproject.domain.seat.service.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +49,18 @@ public class MemberController {
     public ResponseEntity<List<GetReservationInfoRes>> findMemberReservations(@PathVariable("member-id") Long memberIdx) {
         try {
             return new ResponseEntity(memberService.findMemberReservations(memberIdx), HttpStatus.OK);
+        } catch (NotFoundException e) {
+            return new ResponseEntity("Member not exist.", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity("Unknown Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 회원 정보 조회
+    @GetMapping("/{member-id}")
+    public ResponseEntity<MemberInfo> findMember(@PathVariable("member-id") Long id) {
+        try {
+            return new ResponseEntity<>(memberService.findMember(id), HttpStatus.OK);
         } catch (NotFoundException e) {
             return new ResponseEntity("Member not exist.", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
