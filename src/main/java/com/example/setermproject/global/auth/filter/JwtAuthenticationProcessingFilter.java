@@ -1,4 +1,4 @@
-package com.example.setermproject.global.auth.jwt;
+package com.example.setermproject.global.auth.filter;
 
 import com.example.setermproject.domain.member.entity.Member;
 import com.example.setermproject.domain.member.repository.MemberRepository;

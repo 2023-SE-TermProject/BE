@@ -44,15 +44,6 @@ public class ReservationController {
         }
     }
 
-    // 회원 예약 내역 조회
-    @GetMapping("/{member-id}")
-    public ResponseEntity<List<GetReservationInfoRes>> findMemberReservations(@PathVariable("member-id") Long memberIdx) {
-        try {
-            return new ResponseEntity(reservationService.findMemberReservations(memberIdx), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity("Unknown Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     // 예약 가능 시간 조회(요청을 어떻게..)
 }
