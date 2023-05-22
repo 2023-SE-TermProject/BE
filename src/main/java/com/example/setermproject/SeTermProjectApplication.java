@@ -34,8 +34,10 @@ public class SeTermProjectApplication {
 
         List<Seat> seats = new ArrayList<>();
         for(int floor = 2; floor <= 7; floor++) {
+            int seatNum = 25;
             if(floor == 6) continue;
-            for(int i = 0; i < 15; i++) {
+            else if(floor == 2) seatNum = 9;
+            for(int i = 1; i <= seatNum; i++) {
                 seats.add(Seat.builder().floor(floor).seatNumber(i).build());
             }
         }
