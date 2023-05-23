@@ -36,6 +36,14 @@ public class Reservation {
     @Setter
     private ReservationStatus status;
 
+    public LocalDateTime getStartTime(){
+        return this.startTime.plusHours(9);
+    }
+
+    public LocalDateTime getEndTime(){
+        return this.endTime.plusHours(9);
+    }
+
     @Builder
     private Reservation(Long memberIdx, MeetingRoom meetingRoom, LocalDateTime startTime, LocalDateTime endTime) {
         this.memberIdx = memberIdx;
@@ -48,8 +56,8 @@ public class Reservation {
     public GetReservationInfoRes toReservationInfo() {
         return GetReservationInfoRes.builder()
                 .idx(this.idx)
-                .startTime(this.startTime)
-                .endTime(this.endTime)
+                .startTime(getStartTime())
+                .endTime(getEndTime())
                 .roomNumber(this.meetingRoom.getRoomNumber())
                 .build();
     }

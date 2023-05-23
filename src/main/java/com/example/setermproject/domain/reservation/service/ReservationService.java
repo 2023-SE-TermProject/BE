@@ -60,7 +60,7 @@ public class ReservationService {
 
     @Transactional(readOnly = true)
     public List<GetReservationInfoRes> findMemberReservations(Long memberIdx) {
-        List<Reservation> reservations = reservationRepository.findByMemberIdxAndEndTimeAfterOrderByStartTime(memberIdx, LocalDateTime.now());
+        List<Reservation> reservations = reservationRepository.findByMemberIdxAndEndTimeAfterOrderByStartTime(memberIdx, LocalDateTime.now().minusHours(9));
 
         return reservations.stream().map(reservation -> reservation.toReservationInfo()).collect(Collectors.toList());
     }
@@ -89,11 +89,17 @@ public class ReservationService {
 
         List<LocalTime> validStartTimes = new ArrayList<>();
 
-        for(int i = RESERVATION_START_HOUR; i < RESERVATION_END_HOUR; i++) {
+        int startHour = RESERVATION_START_HOUR;
+
+        if(date.isEqual(LocalDate.now())) {
+            startHour = LocalDateTime.now().getHour();
+        }
+
+        for(int i = startHour; i < RESERVATION_END_HOUR; i++) {
             validStartTimes.add(LocalTime.of(i, 0));
         }
         for(Reservation reservation : reservations) {
-            for(int i = (reservation.getStartTime().getHour() + 9); i < (reservation.getEndTime().getHour() + 9); i++) {
+            for(int i = (reservation.getStartTime().getHour()); i < (reservation.getEndTime().getHour()); i++) {
                 validStartTimes.remove(LocalTime.of(i,0));
                 System.out.println("------------------- delete list : " + i);
             }
@@ -113,7 +119,7 @@ public class ReservationService {
             System.out.println("--------------------start get hour : " + start);
             System.out.println("--------------------reservation get hour : " + reservation.get().getStartTime());
             if(reservation.get().getStartTime().toLocalDate().isEqual(start.toLocalDate())) {
-                int gap = (reservation.get().getStartTime().getHour() + 9) - start.getHour();
+                int gap = (reservation.get().getStartTime().getHour()) - start.getHour();
                 timeRange = Math.min(Math.min(gap, limit), 4);
             }
             else {

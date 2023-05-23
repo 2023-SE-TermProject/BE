@@ -1,4 +1,4 @@
-package com.example.library.model;
+package com.example.setermproject.domain.seat.dto;
 
 public class SeatReservation {
     private Long seatId;
