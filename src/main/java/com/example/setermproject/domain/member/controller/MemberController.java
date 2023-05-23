@@ -5,7 +5,7 @@ import com.example.setermproject.domain.member.dto.response.MemberInfo;
 import com.example.setermproject.domain.member.service.MemberService;
 import com.example.setermproject.domain.reservation.dto.response.GetReservationInfoRes;
 import com.example.setermproject.domain.reservation.exception.NotFoundException;
-import com.example.setermproject.domain.seat.dto.MemberSeatRes;
+import com.example.setermproject.domain.seat.dto.response.MemberSeatRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

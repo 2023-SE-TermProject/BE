@@ -1,4 +1,4 @@
-package com.example.setermproject.domain.seat.dto;
+package com.example.setermproject.domain.seat.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

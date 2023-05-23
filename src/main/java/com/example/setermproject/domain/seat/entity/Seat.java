@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table
@@ -22,9 +23,11 @@ public class Seat {
     @Column
     private Integer seatNumber;
 
+    @Setter
     @Column
     private Long memberId;
 
+    @Setter
     @Column
     private SeatStatus status;
 
