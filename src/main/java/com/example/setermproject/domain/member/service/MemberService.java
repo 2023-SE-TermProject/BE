@@ -7,14 +7,13 @@ import com.example.setermproject.domain.member.repository.MemberRepository;
 import com.example.setermproject.domain.reservation.dto.response.GetReservationInfoRes;
 import com.example.setermproject.domain.reservation.exception.NotFoundException;
 import com.example.setermproject.domain.reservation.service.ReservationService;
-import com.example.setermproject.domain.seat.dto.MemberSeatRes;
+import com.example.setermproject.domain.seat.dto.response.MemberSeatRes;
 import com.example.setermproject.domain.seat.service.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

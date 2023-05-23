@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface SeatRepository extends JpaRepository<Seat, Long> {
     public Optional<Seat> findByMemberId(Long memberId);
 
-    @Query("SELECT s FROM Seat s WHERE s.floor = :floor AND s.status = 'available'")
-    List<Seat> findAvailableSeatsByFloor(@Param("floor") Integer floor);
+    public List<Seat> findByFloor(Integer floor);
 }
