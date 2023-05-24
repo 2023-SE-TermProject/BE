@@ -12,7 +12,7 @@ import java.io.IOException;
 @Component
 public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
 
-    private final static String FAILED_REDIRECT_URL = "http://localhost:3000/login";
+    private final static String FAILED_REDIRECT_URL = "http://gcu-metaverse.shop/login";
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
