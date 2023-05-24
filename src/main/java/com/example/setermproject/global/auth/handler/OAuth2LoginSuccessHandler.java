@@ -16,14 +16,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 @Component
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
-    private final MemberRepository memberRepository;
-    private static final String targetUrl = "http://localhost:3000/loginauth";
+    private static final String targetUrl = "http://3.36.28.64/loginauth";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
