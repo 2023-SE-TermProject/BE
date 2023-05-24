@@ -92,7 +92,7 @@ public class ReservationService {
         int startHour = RESERVATION_START_HOUR;
 
         if(date.isEqual(LocalDate.now())) {
-            startHour = LocalDateTime.now().getHour();
+            startHour = LocalDateTime.now().plusHours(1).getHour();
         }
 
         for(int i = startHour; i < RESERVATION_END_HOUR; i++) {
