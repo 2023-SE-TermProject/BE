@@ -22,7 +22,7 @@ import java.io.IOException;
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final JwtService jwtService;
-    private static final String targetUrl = "http://gcu-metaverse.shop/loginauth";
+    private static final String targetUrl = "https://gcu-metaverse.shop/loginauth";
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
