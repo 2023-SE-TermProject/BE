@@ -10,6 +10,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * Reservation entity definition
+ */
 @Table
 @Entity
 @Getter

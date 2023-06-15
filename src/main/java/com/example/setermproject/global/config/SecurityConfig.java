@@ -24,6 +24,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    // dependency injection by spring container
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2LoginSuccessHandler successHandler;
     private final OAuth2LoginFailureHandler failureHandler;
@@ -39,6 +41,7 @@ public class SecurityConfig {
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // set access level of each uri
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
@@ -48,6 +51,7 @@ public class SecurityConfig {
                 .anyRequest().hasRole(Role.USER.name())
         );
 
+        // set oauth2 login attributes
         http.oauth2Login()
                 .userInfoEndpoint().userService(oAuth2UserService)
                 .and()// CustomUserService 설정

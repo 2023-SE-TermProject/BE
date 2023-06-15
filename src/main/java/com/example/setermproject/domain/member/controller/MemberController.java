@@ -18,9 +18,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
 
+    // dependency injection by spring container
     private final MemberService memberService;
 
-    // 최초 가입 회원 학번 입력
+    /**
+     * register member information when first login
+     * @param id
+     * @param memberSiginupReq
+     * @return true or false
+     */
     @PatchMapping("/{member-id}/sign-up")
     public ResponseEntity<Boolean> registerMember(@PathVariable("member-id") Long id, @RequestBody MemberSiginupReq memberSiginupReq) {
         try {
@@ -32,7 +38,11 @@ public class MemberController {
         }
     }
 
-    // 회원이 이용 중인 좌석 조회
+    /**
+     * find seat that member is using
+     * @param memberId
+     * @return MemberSeatRes
+     */
     @GetMapping("/{member-id}/seat")
     public ResponseEntity<MemberSeatRes> findMemberUsingSeat(@PathVariable("member-id") Long memberId) {
         try {
@@ -44,7 +54,11 @@ public class MemberController {
         }
     }
 
-    // 회원 예약 내역 조회
+    /**
+     * find member's reservation list
+     * @param memberIdx
+     * @return List<GetReservationInfoRes>
+     */
     @GetMapping("/{member-id}/reservation")
     public ResponseEntity<List<GetReservationInfoRes>> findMemberReservations(@PathVariable("member-id") Long memberIdx) {
         try {
@@ -56,7 +70,11 @@ public class MemberController {
         }
     }
 
-    // 회원 정보 조회
+    /**
+     * find member information
+     * @param id
+     * @return MemberInfo
+     */
     @GetMapping("/{member-id}")
     public ResponseEntity<MemberInfo> findMember(@PathVariable("member-id") Long id) {
         try {

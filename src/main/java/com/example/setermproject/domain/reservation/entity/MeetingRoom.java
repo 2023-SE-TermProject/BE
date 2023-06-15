@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * MeetingRoom entity definition
+ */
 @Table
 @Entity
 @Getter

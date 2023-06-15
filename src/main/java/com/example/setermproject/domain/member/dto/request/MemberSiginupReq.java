@@ -5,5 +5,6 @@ import lombok.Data;
 @Data
 public class MemberSiginupReq {
 
+    // student number of member
     private String studentId;
 }

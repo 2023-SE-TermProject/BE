@@ -16,8 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeatController {
 
+    // dependency injection by spring container
     private final SeatService seatService;
 
+    /**
+     * find seat information list of specific floor
+     * @param floor
+     * @return List<SeatInfo>
+     */
     @GetMapping("/{floor}")
     public ResponseEntity<List<SeatInfo>> getSeatsByFloor(@PathVariable Integer floor) {
         try {
@@ -27,6 +33,11 @@ public class SeatController {
         }
     }
 
+    /**
+     * check in/out to seat
+     * @param seatReservation
+     * @return "체크아웃 성공" or "잘못된 요청입니다" as String
+     */
     @PostMapping("/checkinout")
     public ResponseEntity<String> checkInAndOut(@RequestBody SeatReservation seatReservation) {
         try {

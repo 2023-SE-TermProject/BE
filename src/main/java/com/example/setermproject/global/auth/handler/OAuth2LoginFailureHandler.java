@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * handler for log-in fail
+ */
 @Component
 public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
 

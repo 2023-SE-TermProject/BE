@@ -23,9 +23,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReservationController {
 
+    // dependency injection by spring container
     private final ReservationService reservationService;
 
-    // 예약
+    /**
+     * reserve meeting room
+     * @param postReservationReq
+     * @return true or false
+     */
     @PostMapping
     public ResponseEntity<Boolean> reserveMeetingRoom(@RequestBody PostReservationReq postReservationReq) {
         try {
@@ -38,7 +43,11 @@ public class ReservationController {
         }
     }
 
-    // 예약 취소
+    /**
+     * cancel reservation meeting room
+     * @param idx of reservation
+     * @return true or false
+     */
     @DeleteMapping("/{reservation-id}")
     public ResponseEntity<Boolean> cancelReservation(@PathVariable("reservation-id") Long idx) {
         try {
@@ -50,7 +59,10 @@ public class ReservationController {
         }
     }
 
-    // 모든 회의실 리스트 조회
+    /**
+     * find meeting room list
+     * @return List<RoomInfo>
+     */
     @GetMapping("/room-list")
     public ResponseEntity<List<RoomInfo>> findRoomList() {
         try {
@@ -60,7 +72,14 @@ public class ReservationController {
         }
     }
 
-    // 예약시작 가능한 시간 조회
+    /**
+     * find valid reservation start time list of meeting room
+     * @param roomIdx
+     * @param year
+     * @param month
+     * @param date
+     * @return List<LocalTime>
+     */
     @GetMapping("/{room-id}")
     public ResponseEntity<List<LocalTime>> findValidReservationStartTime(@PathVariable("room-id") Long roomIdx,
                                                                          @RequestParam("year") Integer year,
@@ -75,7 +94,15 @@ public class ReservationController {
         }
     }
 
-    // 예약시작 시간으로부터 예약 가능한 시간 조회
+    /**
+     * find valid time scope from reservation start time of meeting room
+     * @param roomIdx
+     * @param year
+     * @param month
+     * @param date
+     * @param start
+     * @return List<LocalTime>
+     */
     @GetMapping("/{room-id}/valid-time")
     public ResponseEntity<List<LocalTime>> findValidReservationStartTime(@PathVariable("room-id") Long roomIdx,
                                                                          @RequestParam("year") Integer year,

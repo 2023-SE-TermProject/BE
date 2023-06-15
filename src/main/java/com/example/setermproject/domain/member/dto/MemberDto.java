@@ -6,7 +6,10 @@ import lombok.Data;
 @Data
 @Builder
 public class MemberDto {
+    // member id
     private Long id;
+    // member name
     private String name;
+    // member email
     private String email;
 }

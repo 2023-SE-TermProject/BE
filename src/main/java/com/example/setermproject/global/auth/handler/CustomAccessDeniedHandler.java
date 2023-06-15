@@ -13,16 +13,20 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * Oauth2 log-in denied handeler
+ */
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
+    // executed logic when access denied
     @Override
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
                        AccessDeniedException e) throws IOException, ServletException {
 
 
-        //response에 넣기
+        // set http response
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
         httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
         try (OutputStream os = httpServletResponse.getOutputStream()) {

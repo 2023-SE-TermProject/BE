@@ -3,6 +3,9 @@ package com.example.setermproject.domain.member.entity.vo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * define type of member roles
+ */
 @AllArgsConstructor
 @Getter
 public enum Role {

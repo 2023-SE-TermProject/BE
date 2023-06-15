@@ -17,10 +17,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 
+/**
+ * handler for success of log-in
+ */
 @Component
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    // dependency injection by spring container
     private final JwtService jwtService;
     private static final String targetUrl = "https://gcu-metaverse.shop/loginauth";
 
@@ -36,7 +40,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
             String accessToken = jwtService.createAccessToken(oAuth2User.getId(), oAuth2User.getRole());
 
-            // Member의 Role이 GUEST일 경우 처음 로그인 한 회원
+            // if role of member is guest, the member isn't registered
             if (oAuth2User.getRole() == Role.GUEST) {
                 role = "guest";
             }
